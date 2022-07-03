@@ -4,20 +4,20 @@ package programmers.level2;
 public class PrimeNumber {
     public int solution(int n, int k) {
         int answer = 0;
-        String value = "";
+        StringBuilder value = new StringBuilder();
 
 
         while (n>0) {
             int remains = n % k;
             n = n / k;
-            value = remains + value;
+            value.insert(0, remains);
         }
 
-        String[] values = value.split("0");
+        String[] values = value.toString().split("0");
 
         for (String val : values) {
             if(!"".equals(val)) {
-                int number = Integer.parseInt(val);
+                long number = Long.parseLong(val);
                 if(isPrimeNumber(number)) {
                     answer++;
                 }
@@ -27,12 +27,13 @@ public class PrimeNumber {
         return answer;
     }
 
-    private boolean isPrimeNumber(int number) {
+    private boolean isPrimeNumber(long number) {
         if(number < 2) {
             return false;
         }
 
-        for (int i=2; i*i <= number; i++) {
+        long root = (long) Math.sqrt(number);
+        for (int i=2; i <= root; i++) {
             if (number % i == 0) {
                 return false;
             }
